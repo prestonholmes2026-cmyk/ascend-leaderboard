@@ -218,7 +218,7 @@ export default function App() {
      </div>
 
 
-Tell me when ready for Part 3!
+
          {showLogin && (
        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.9)", display:"flex", alignItems:"center", justifyContent:"center", zIndex:200 }}>
          <div style={{ background:"#0f0d07", border:`1px solid ${border}`, borderTop:`2px solid ${gold}`, borderRadius:8, padding:32, width:300, textAlign:"center" }}>
