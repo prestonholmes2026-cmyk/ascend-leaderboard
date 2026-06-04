@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { initializeApp, getApps } from "firebase/app";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCoPVEkPF68GCFotwx4QnfrvVxzF5h5sag",
@@ -12,35 +12,34 @@ const firebaseConfig = {
   appId: "1:216368084693:web:a53381fe5afa8e8a5c545c"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
 
 export default function Home() {
   const [showJoin, setShowJoin] = useState(false);
   const [showWork, setShowWork] = useState(false);
-  const [joinForm, setJoinForm] = useState({ name:"", phone:"", email:"", about:"" });
-  const [workForm, setWorkForm] = useState({ name:"", phone:"", email:"" });
+  const [joinForm, setJoinForm] = useState({name:"",phone:"",email:"",about:""});
+  const [workForm, setWorkForm] = useState({name:"",phone:"",email:""});
   const [joinSent, setJoinSent] = useState(false);
   const [workSent, setWorkSent] = useState(false);
   const navigate = useNavigate();
-
   const gold = "#c9a84c";
   const border = "#1e1a12";
 
   async function submitJoin(e) {
     e.preventDefault();
-    await addDoc(collection(db, "applications"), { ...joinForm, type:"join", createdAt: serverTimestamp() });
+    await addDoc(collection(db,"applications"),{...joinForm,type:"join",createdAt:serverTimestamp()});
     setJoinSent(true);
   }
 
   async function submitWork(e) {
     e.preventDefault();
-    await addDoc(collection(db, "contacts"), { ...workForm, type:"work", createdAt: serverTimestamp() });
+    await addDoc(collection(db,"contacts"),{...workForm,type:"work",createdAt:serverTimestamp()});
     setWorkSent(true);
   }
 
   return (
-    <div style={{minHeight:"100vh",background:"#0a0a0a",color:"#f0ead6",fontFamily:"'Georgia',serif"}}>
+    <div style={{minHeight:"100vh",background:"#0a0a0a",color:"#f0ead6",fontFamily:"Georgia,serif"}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500&display=swap');
         *{box-sizing:border-box;margin:0;padding:0;}
@@ -51,11 +50,9 @@ export default function Home() {
         .fade-in-2{animation:fadeIn 1s ease 0.3s both;}
         .fade-in-3{animation:fadeIn 1s ease 0.6s both;}
         .gold-text{background:linear-gradient(135deg,#c9a84c,#f0d070,#c9a84c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-        .btn-gold{background:linear-gradient(135deg,#8a6a1a,#c9a84c);color:#000;border:none;border-radius:4px;padding:14px 32px;cursor:pointer;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:opacity 0.2s;}
-        .btn-gold:hover{opacity:0.85;}
-        .btn-outline{background:transparent;color:#c9a84c;border:1px solid #c9a84c;border-radius:4px;padding:13px 32px;cursor:pointer;font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;transition:all 0.2s;}
-        .btn-outline:hover{background:#c9a84c22;}
-        .form-input{width:100%;background:#111;border:1px solid #2a2010;border-radius:4px;color:#f0ead6;padding:12px 14px;font-size:14px;margin-bottom:12px;font-family:'Inter',sans-serif;}
+        .btn-gold{background:linear-gradient(135deg,#8a6a1a,#c9a84c);color:#000;border:none;border-radius:4px;padding:14px 32px;cursor:pointer;font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+        .btn-outline{background:transparent;color:#c9a84c;border:1px solid #c9a84c;border-radius:4px;padding:13px 32px;cursor:pointer;font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;}
+        .form-input{width:100%;background:#111;border:1px solid #2a2010;border-radius:4px;color:#f0ead6;padding:12px 14px;font-size:14px;margin-bottom:12px;}
         .form-input:focus{border-color:#c9a84c44;}
         ::placeholder{color:#4a3f1e;}
       `}</style>
