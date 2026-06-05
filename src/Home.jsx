@@ -89,7 +89,10 @@ export default function Home() {
         </div>
         <div className="fade-in-3" style={{display:"flex",gap:16,flexWrap:"wrap",justifyContent:"center"}}>
           <button className="btn-gold" onClick={()=>setShowJoin(true)}>Join the Team</button>
-          <button className="btn-outline" onClick={
+          <button className="btn-outline" onClick={()=>setShowWork(true)}>Work With Us</button>
+        </div>
+        <div style={{position:"absolute",bottom:0,left:0,right:0,height:120,background:"linear-gradient(transparent,#0a0a0a)",pointerEvents:"none"}}/>
+      </div>
      {/* FAQ SECTION */}
      <div style={{maxWidth:640,margin:"0 auto",padding:"80px 24px"}}>
        <div style={{textAlign:"center",marginBottom:48}}>
